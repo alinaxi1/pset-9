@@ -3,7 +3,6 @@ h1{
   font-size: 75px;
   margin: 2%;
   padding-bottom: 20px;
-  font-family: "Lucida Console", Monaco, monospace;
 }
 
 body {
@@ -15,8 +14,8 @@ body {
   display: inline-grid;
   justify-content: center;
   align-items: center;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 
@@ -39,11 +38,11 @@ body {
 
 .square {
   border: 1px solid rgba(0, 0, 0, 0.75);
-  font-size: 96px;
-  height: 125px;
-  line-height: 125px;
+  font-size: 90px;
+  height: 100px;
+  line-height: 100px;
   user-select: none;
-  width: 125px;
+  width: 100px;
 }
 
 
@@ -62,6 +61,8 @@ body {
   margin: 1%;
   text-align: center;
   width: 456px;
+  position:relative;
+  margin-top:100%;
 }
 
 
