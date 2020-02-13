@@ -1,10 +1,18 @@
+h1{
+  margin: 0 auto;
+  font-size: 75px;
+  margin: 2%;
+  padding-bottom: 20px;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
 body {
   background-color: #ccccff;
   text-align: center;
 }
 
 .container {
-  display:inline-grid;
+  display: inline-grid;
   justify-content: center;
   align-items: center;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
