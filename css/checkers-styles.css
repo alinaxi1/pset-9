@@ -60,9 +60,9 @@ body {
   line-height: 55px;
   margin: 1%;
   text-align: center;
-  width: 456px;
-  position:relative;
-  margin-top:100%;
+  width: 200px;
+  position: fixed;
+  float: inherit;
 }
 
 
