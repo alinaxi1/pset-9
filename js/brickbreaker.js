@@ -1,252 +1,271 @@
-///////////////////// CONSTANTS /////////////////////////////////////
-const winningConditions = [
-  [0, 1, 2, 3],
-  [1, 2, 3, 4],
-  [2, 3, 4, 5],
-  [3, 4, 5, 6],
-  [7, 8, 9, 10],
-  [8, 9, 10, 11],
-  [9, 10, 11, 12],
-  [10, 11, 12, 13],
-  [14, 15, 16, 17],
-  [15, 16, 17, 18],
-  [16, 17, 18, 19],
-  [17, 18, 19, 20],
-  [21, 22, 23, 24],
-  [22, 23, 24, 25],
-  [23, 24, 25, 26],
-  [24, 25, 26, 27]
-]
-///////////////////// APP STATE (VARIABLES) /////////////////////////
-let board;
-let turn;
-let win;
-let keepScoreX = 0;
-let keepScoreO = 0;
-///////////////////// CACHED ELEMENT REFERENCES /////////////////////
-const squares = Array.from(document.querySelectorAll("#board div"));
-const message = document.querySelector("h2");
-///////////////////// EVENT LISTENERS ///////////////////////////////
-window.onload = init;
-document.getElementById("board").onclick = takeTurn;
-document.getElementById("reset-button").onclick = init;
-///////////////////// FUNCTIONS /////////////////////////////////////
-function init() {
-  board = [
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-  ];
-  turn = "Red";
-  win = null;
-
-  render();
-}
-
-function firstRed() {
-  document.getElementById('turnButton').innerHTML = "Turn: Red";
-  turn = "Red";
-}
-
-const canvas = document.getElementById("game");
+// Canvas
+const canvas = document.getElementById("brick-breaker-game");
 const ctx = canvas.getContext("2d");
-let counter = document.getElementById("wins")
+
+
+// Variables
+let dx;
+let dxFactor;
 let speed;
-ctx.strokeStyle = "blue";
-let speed_change;
-let start = false;
-let blocks = [];
-let wins = 0;
-let user = {
-    x: (canvas.width / 2) - 40,
-    y: canvas.height - 10,
-    width: 80,
-    height: 5,
-    movement: 20
-};
-let boinker = {
+let gameStarted = false;
+
+// Objects
+let bottles = [];
+
+let ball = {
     x: undefined,
     y: undefined,
     radius: 10,
     right: true,
     up: true
 };
+
+let paddle = {
+    x: (canvas.width / 2) - 40,
+    y: canvas.height - 10,
+    width: 80,
+    height: 5,
+    movement: 1
+};
+
+let bottleImage = new Image();
+bottleImage.src = "images/juice_bottle.png";
+
+let orangeImage = new Image();
+orangeImage.src = "images/orange2.png";
+
+const victoryAudio = document.getElementById("victory-audio");
+const gameOverAudio = document.getElementById("game-over-audio");
+const glassBreakAudio = document.getElementById("glass-break-audio");
+
+
+// Event Listeners
 window.onload = function() {
-    document.getElementById("reset-button").onclick = init;
-    document.getElementById("game").onclick = init;
+    document.getElementById("brick-breaker-play").onclick = init;
     game();
 }
 document.addEventListener("keydown", getArrowKeys);
+document.getElementById("brick-breaker-game").addEventListener("mousemove", getMouse);
+
+
+// Functions
 function init() {
-    boinker.x = canvas.width / 2;
-    boinker.y = canvas.height - 20;
-    boinker.right = true;
-    boinker.up = true;
-    user.x = (canvas.width / 2) - 40;
-    user.y = canvas.height - 10;
-    speed_change = 1;
+    document.getElementById("brick-breaker-play").innerHTML = "Reset";
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height - 30;
+    ball.right = true;
+    ball.up = true;
+    paddle.x = (canvas.width / 2) - 40;
+    paddle.y = canvas.height - 10;
+    dxFactor = 1;
     speed = 0;
-    blocks = [];
-    createblocks();
-    start = true;
+    bottles = [];
+    createBottles();
+    gameStarted = true;
 }
 
 function game() {
-    if (start) {
+    if (gameStarted) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         draw();
         checkCollision();
         changeDirection();
-        if (blocks.length === 0) {
+        if (bottles.length === 0) {
             win();
         }
     }
+
     setTimeout(game, 20 - speed);
 }
-function changeDirection() {
-    if (boinker.right) {
-        speed = 3 * speed_change;
+
+function checkCollision() {
+    if (ball.x - ball.radius <= 0) {
+        ball.right = true;
+    }
+    if (ball.x + ball.radius >= canvas.width) {
+        ball.right = false;
+    }
+    if (ball.y - ball.radius <= 0) {
+        ball.up = false;
+    }
+    if (ball.y - ball.radius >= canvas.height) {
+        gameOver();
+    }
+
+    for (let j = 0; j < bottles.length; j++) {
+        if (ball.up && ball.y - ball.radius <= bottles[j].y + bottles[j].height && ball.y - ball.radius > bottles[j].y + bottles[j].height - 12 && ball.x >= bottles[j].x - ball.radius && ball.x < bottles[j].x + bottles[j].width + ball.radius) {
+            ball.up = false;
+            ctx.clearRect(bottles[j].x, bottles[j].y, bottles[j].width, bottles[j].height);
+            bottles.splice(j, 1);
+            break;
+        }
+        else if (!ball.up && ball.y + ball.radius >= bottles[j].y && ball.y + ball.radius < bottles[j].y + 12 && ball.x >= bottles[j].x - ball.radius && ball.x < bottles[j].x + bottles[j].width + ball.radius) {
+            ball.up = true;
+            ctx.clearRect(bottles[j].x, bottles[j].y, bottles[j].width, bottles[j].height);
+            bottles.splice(j, 1);
+            break;
+        }
+        else if (ball.right && ball.x + ball.radius >= bottles[j].x && ball.x + ball.radius < bottles[j].x + 12 && ball.y >= bottles[j].y - ball.radius && ball.y < bottles[j].y + bottles[j].height + ball.radius) {
+            ball.right = false;
+            ctx.clearRect(bottles[j].x, bottles[j].y, bottles[j].width, bottles[j].height);
+            bottles.splice(j, 1);
+            break;
+        }
+        else if (!ball.right && ball.x - ball.radius <= bottles[j].x + bottles[j].width && ball.x - ball.radius > bottles[j].x + bottles[j].width - 12 && ball.y >= bottles[j].y - ball.radius && ball.y < bottles[j].y + bottles[j].height + ball.radius) {
+            ball.right = true;
+            ctx.clearRect(bottles[j].x, bottles[j].y, bottles[j].width, bottles[j].height);
+            bottles.splice(j, 1);
+            break;
+        }
+    }
+
+    if (ball.y + ball.radius >= paddle.y && ball.y <= paddle.y + paddle.height) {
+        let a = 3;
+        const DX_FACTOR_CHANGE = a / 25;
+        for (let i = 2; i <= 100; i += 2) {
+            if (ball.x >= paddle.x - ball.radius + i - 2 && ball.x < paddle.x - ball.radius + i) {
+                if (i < 50) {
+                    ball.up = true;
+                    ball.right = false;
+                    ball.y = canvas.height - 20;
+                    speed = (speed >= 14) ? speed = 14 : speed + 0.5;
+                    dxFactor = Math.abs(a);
+                }
+                else if (i >= 50) {
+                    ball.up = true;
+                    ball.right = true;
+                    ball.y = canvas.height - 20;
+                    speed = (speed >= 14) ? speed = 14 : speed + 0.5;
+                    dxFactor = Math.abs(a);
+                }
+                break;
+            }
+            else {
+                a -= DX_FACTOR_CHANGE;
+            }
+        }
+    }
+
+    if (paddle.x + paddle.width > canvas.width) {
+        paddle.movement = 0;
+        paddle.x = canvas.width - paddle.width;
+    }
+    else if (paddle.x < 0) {
+        paddle.movement = 0;
+        paddle.x = 0;
     }
     else {
-        speed = -3 * speed_change;
+        paddle.movement = 1;
     }
-    if (boinker.up) {
+}
+
+function changeDirection() {
+    if (ball.right) {
+        dx = 3 * dxFactor;
+    }
+    else {
+        dx = -3 * dxFactor;
+    }
+    if (ball.up) {
         dy = -3;
     }
     else {
         dy = 3;
     }
-    boinker.x += speed;
-    boinker.y += dy;
+    ball.x += dx;
+    ball.y += dy;
 }
-function checkCollision() {
-    if (boinker.x - boinker.radius <= 0) {
-        boinker.right = true;
-    }
-    if (boinker.x + boinker.radius >= canvas.width) {
-        boinker.right = false;
-    }
-    if (boinker.y - boinker.radius <= 0) {
-        boinker.up = false;
-    }
-    if (boinker.y - boinker.radius >= canvas.height) {
-        lose();
-    }
 
-    for (let j = 0; j < blocks.length; j++) {
-        if (boinker.y - boinker.radius <= blocks[j].y + blocks[j].height && boinker.y - boinker.radius > blocks[j].y + blocks[j].height - 5 && boinker.x >= blocks[j].x - boinker.radius && boinker.x < blocks[j].x + blocks[j].width + boinker.radius) {
-            boinker.up = false;
-            ctx.clearRect(blocks[j].x, blocks[j].y, blocks[j].width, blocks[j].height);
-            blocks.splice(j, 1);
-            break;
-        }
-        else if (!boinker.up && boinker.y + boinker.radius >= blocks[j].y && boinker.y + boinker.radius < blocks[j].y + 12 && boinker.x >= blocks[j].x - boinker.radius && boinker.x < blocks[j].x + blocks[j].width + boinker.radius) {
-          boinker.up = true;
-          ctx.clearRect(blocks[j].x, blocks[j].y, blocks[j].width, blocks[j].height);
-          blocks.splice(j, 1);
-          break;
-        }
-        else if (boinker.x + boinker.radius >= blocks[j].x && boinker.x + boinker.radius < blocks[j].x + 10 && boinker.y >= blocks[j].y - boinker.radius && boinker.y < blocks[j].y + blocks[j].height + boinker.radius) {
-            boinker.right = false;
-            ctx.clearRect(blocks[j].x, blocks[j].y, blocks[j].width, blocks[j].height);
-            blocks.splice(j, 1);
-            break;
-        }
-        else if (boinker.x - boinker.radius <= blocks[j].x + blocks[j].width && boinker.x - boinker.radius > blocks[j].x + blocks[j].width - 10 && boinker.y >= blocks[j].y - boinker.radius && boinker.y < blocks[j].y + blocks[j].height + boinker.radius) {
-            boinker.right = true;
-            ctx.clearRect(blocks[j].x, blocks[j].y, blocks[j].width, blocks[j].height);
-            blocks.splice(j, 1);
-            break;
-        }
-    }
-
-    if (boinker.y + boinker.radius == user.y) {
-        let a = 3;
-        const speed_change_change = a / 25;
-        for (let i = 2; i <= 100; i += 2) {
-            if (boinker.x >= user.x - boinker.radius + i - 2 && boinker.x < user.x - boinker.radius + i) {
-                if (i < 50) {
-                    boinker.up = true;
-                    boinker.right = false;
-                    speed = (speed >= 11) ? speed = 11 : speed + 0.5;
-                    speed_change = Math.abs(a);
-                }
-                else if (i >= 50) {
-                    boinker.up = true;
-                    boinker.right = true;
-                    speed = (speed >= 11) ? speed = 11 : speed + 0.5;
-                    speed_change = Math.abs(a);
-                }
-                break;
-            }
-            else {
-                a -= speed_change_change;
-            }
-        }
-    }
-
-    if (user.x + user.width > canvas.width) {
-        user.movement = 0;
-        user.x = canvas.width - user.width;
-    }
-    else if (user.x < 0) {
-        user.movement = 0;
-        user.x = 0;
-    }
-    else {
-        user.movement = 20;
-    }
-}
 function draw() {
-    ctx.strokeRect(user.x, user.y, user.width, user.height);
-    ctx.beginPath();
-    ctx.arc(boinker.x, boinker.y, boinker.radius, 0, Math.PI * 2);
-    ctx.stroke();
-    for (let i = 0; i < blocks.length; i++) {
-        ctx.strokeRect(blocks[i].x, blocks[i].y, blocks[i].width, blocks[i].height);
+    ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+
+    ctx.drawImage(orangeImage, ball.x - ball.radius, ball.y - ball.radius);
+
+    for (let i = 0; i < bottles.length; i++) {
+        ctx.drawImage(bottleImage, bottles[i].x, bottles[i].y);
     }
+
+    ctx.font = "24px Comic Sans MS";
+    ctx.fillStyle = "lightgray";
+    ctx.textAlign = "left";
+    ctx.fillText("Bottles Left: " + bottles.length, 10, canvas.height - 20);
+
+    ctx.textAlign = "right";
+    ctx.fillText("Speed: " + (Math.floor(speed) + 1), canvas.width - 10, canvas.height - 20);
+    ctx.font = "40px Comic Sans MS";
+
+    ctx.fillStyle = "orange";
+    ctx.textAlign = "center";
 }
+
 function getArrowKeys(event) {
-    if (start) {
+    if (gameStarted) {
         if (event.keyCode == 37) {
-            moveuser(-1 * user.movement);
+            let timer = setInterval(() => paddle.x -= paddle.movement, 4);
+            setTimeout(() => { clearInterval(timer); }, 100);
         }
         else if (event.keyCode == 39) {
-            moveuser(user.movement);
+            let timer2 = setInterval(() => paddle.x += paddle.movement, 4);
+            setTimeout(() => { clearInterval(timer2); }, 100);
         }
     }
 }
-function moveuser(pixels) {
-    user.x += pixels;
+
+function getMouse(event2) {
+    paddle.x = event2.offsetX - (paddle.width / 2);
 }
-function createblocks() {
+
+function createBottles() {
     for (let y = 0; y <= 80; y += 40) {
         for (let x = 0; x < canvas.width; x += canvas.width / 10) {
+            // let hasPowerUp = (Math.random() > 0.9) ? true : false;
+            // let powerUp;
+            // if (hasPowerUp) {
+            //     let powerUpSelector = randomInteger(3);
+            //     switch(powerUpSelector) {
+            //         case 0:
+            //             powerUp = "speed down";
+            //             break;
+            //         case 1:
+            //             powerUp = "large paddle";
+            //             break;
+            //         case 2:
+            //             powerUp = "uh";
+            //             break;
+            //     }
+            // }
             let bottleTemplate = {
                 x: x,
                 y: y,
                 width: canvas.width / 10,
                 height: 40
             };
-            blocks.push(bottleTemplate);
+            bottles.push(bottleTemplate);
         }
     }
 }
-function lose() {
-    init();
+
+function gameOver() {
+    gameStarted = false;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let gameOverStats = (bottles.length === 29) ? (30 - bottles.length) + " bottle broken out of 30" : (30 - bottles.length) + " bottles broken out of 30";
+    ctx.strokeText("GAME OVER", canvas.width / 2, (canvas.height / 2) - 40);
+    ctx.fillText("GAME OVER", canvas.width / 2, (canvas.height / 2) - 40);
+    ctx.strokeText(gameOverStats, canvas.width / 2, (canvas.height / 2) + 40);
+    ctx.fillText(gameOverStats, canvas.width / 2, (canvas.height / 2) + 40);
+    document.getElementById("brick-breaker-play").innerHTML = "Play Again";
 }
+
 function win() {
-  start = false;
-  wins += 1
-  counter.innerHTML = wins
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "blue";
-  ctx.strokeStyle = "black";
-  ctx.lineWidth = 2.5;
-  ctx.textAlign = "center";
-  ctx.font = "60px Arial";
-  ctx.fillText("You Win!", canvas.width/2, (canvas.height/2) - 40);
+    gameStarted = false;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeText("CONGRATULATIONS!", canvas.width / 2, (canvas.height / 2) - 40);
+    ctx.fillText("CONGRATULATIONS!", canvas.width / 2, (canvas.height / 2) - 40);
+    ctx.strokeText("You are truly the master of juice!", canvas.width / 2, (canvas.height / 2) + 40);
+    ctx.fillText("You are truly the master of juice!", canvas.width / 2, (canvas.height / 2) + 40);
+    document.getElementById("brick-breaker-play").innerHTML = "Play Again";
+}
+
+function randomInteger(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }

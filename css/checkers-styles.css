@@ -10,48 +10,74 @@ body {
   text-align: center;
 }
 
+div {
+  text-align: center;
+  display: inline-block;
+}
+.wins {
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  user-select: none;
+  width: 150px;
+}
 .container {
-  display: inline-grid;
+  display: flex;
   justify-content: center;
   align-items: center;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
-
-
-
 .column {
   height: 100%;
   width: 100%;
   flex-direction: column;
 }
-
-
-
 .wrap {
   flex-wrap: wrap;
-  height: 456px;
-  width: 456px;
+  height: 615px;
+  width: 675px;
 }
-
-
-
 .square {
   border: 1px solid rgba(0, 0, 0, 0.75);
-  font-size: 90px;
-  height: 100px;
-  line-height: 100px;
+  font-size: 96px;
+  height: 75px;
+  line-height: 75px;
   user-select: none;
-  width: 100px;
+  width: 75px;
 }
-
-
-
 .square:hover {
-  background-color: white;
+  background-color: gray;
   cursor: pointer;
 }
-
+.white {
+  background-color: white;
+}
+.black {
+  background-color: black;
+}
+#table {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+}
+#x_wins {
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  user-select: none;
+  width: 150px;
+  background-color: white;
+}
+#o_wins {
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  user-select: none;
+  width: 150px;
+  background-color: white;
+}
 #reset-button {
   background-color: white;
   border: 1px solid black;
@@ -60,14 +86,28 @@ body {
   line-height: 55px;
   margin: 1%;
   text-align: center;
-  width: 200px;
-  position: fixed;
+  width: 456px;
 }
-
-
-
 #reset-button:hover {
-  background-color: black;
-  color: white;
+  background-color: lightgray;
+  color: black;
+  cursor: pointer;
+}
+#table2 {
+  margin-left: auto;
+  margin-right: auto;
+}
+#switch {
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  font-size: 20px;
+  font-weight: bold;
+  height: 50px;
+  line-height: 50px;
+  user-select: none;
+  width: 300px;
+  background-color: white;
+}
+#switch:hover {
+  background-color: lightgray;
   cursor: pointer;
 }
