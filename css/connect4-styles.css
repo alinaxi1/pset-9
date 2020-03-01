@@ -27,7 +27,7 @@ body {
 
 .container {
   display: flex;
-  justify-content: center;
+  align-content: center;
   align-items: center;
 }
 
@@ -45,4 +45,8 @@ body {
 
 .circle:hover {
   background-color: white;
+}
+
+#resetButton {
+  font-size: 30px;
 }
