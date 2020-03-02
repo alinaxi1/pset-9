@@ -277,9 +277,7 @@ function makeMove (index) {
 		if(index == cpy_upRight){
 			isMove = true;
 			if(the_checker[1].color=="white"){
-				// muta piesa
 				executeMove( multiplier * 1, multiplier * 1, multiplier * 9 );
-				//elimina piesa daca a fost executata o saritura
 				if(mustAttack) eliminateCheck(index - 9);
 			}
 			else{
