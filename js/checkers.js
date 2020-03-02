@@ -170,7 +170,7 @@ function showMoves (piece) {
 			erase_roads(selectedPiece);
 	}
 	selectedPiece = piece;
-	var i,j; // retine indicele damei
+	var i,j; 
 	for ( j = 1; j <= 12; j++){
 		if(the_checker[j].id == piece){
 			i = j;
@@ -189,7 +189,7 @@ function showMoves (piece) {
 	}
 
 	if(!match) {
-	 return 0 ; 
+	 return 0 ;
 	}
 
 	if(the_checker[i].color =="white"){
