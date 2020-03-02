@@ -16,7 +16,7 @@ var moveLength = 80 ;
 var moveDeviation = 10;
 var Dimension = 1;
 var selectedPiece,selectedPieceindex;
-var upRight,upLeft,downLeft,downRight;  // toate variantele posibile de mers pt o  dama
+var upRight,upLeft,downLeft,downRight;  
 var contor = 0 , gameOver = 0;
 var bigScreen = 1;
 
@@ -27,7 +27,7 @@ var the_checker ;
 var oneMove;
 var anotherMove;
 var mustAttack = false;
-var multiplier = 1 
+var multiplier = 1
 
 var tableLimit,reverse_tableLimit ,  moveUpLeft,moveUpRight, moveDownLeft,moveDownRight , tableLimitLeft, tableLimitRight;
 
