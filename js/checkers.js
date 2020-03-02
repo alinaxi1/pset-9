@@ -354,7 +354,6 @@ function makeMove (index) {
 }
 
 function executeMove (X,Y,nSquare){
-	// schimb coordonate piesei mutate
 	the_checker[selectedPieceindex].changeCoord(X,Y);
 	the_checker[selectedPieceindex].setCoord(0,0);
 	block[the_checker[selectedPieceindex].ocupied_square].ocupied = false;
