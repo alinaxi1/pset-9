@@ -211,10 +211,8 @@ function showMoves (piece) {
 		moveDownRight = 9;
 		moveDownLeft = 7;
 	}
- 	/*===========VERIFIC DACA POT ATACA====*/
-
-
-		attackMoves(the_checker[i]); 
+  
+		attackMoves(the_checker[i]);
 
  	if(!mustAttack){
  	  downLeft = checkMove( the_checker[i] , tableLimit , tableLimitRight , moveUpRight , downLeft);
