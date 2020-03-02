@@ -246,7 +246,7 @@ function erase_roads(piece){
 
 function makeMove (index) {
 	var isMove = false;
-	if(!selectedPiece) // daca jocu de abea a inceput si nu a fost selectata nicio piesa
+	if(!selectedPiece) 
 		return false;
 	if(index != upLeft && index != upRight && index != downLeft && index != downRight){
 		erase_roads(0);
