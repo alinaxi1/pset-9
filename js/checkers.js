@@ -102,12 +102,6 @@ checker.prototype.checkIfKing = function () {
 for (var i = 1; i <=64; i++)
 	block[i] =new square_p(square_class[i],i);
 
-/*==================================================*/
-
-
-/*================initializarea damelor =================================*/
-
-	// damele albe
 for (var i = 1; i <= 4; i++){
 	w_checker[i] = new checker(white_checker_class[i], "white", 2*i -1 );
 	w_checker[i].setCoord(0,0);
