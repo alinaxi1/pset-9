@@ -242,11 +242,9 @@ function erase_roads(piece){
 	if(upLeft) block[upLeft].id.style.background = "#BA7A3A";
 }
 
-/*=============MUTAREA PIESEI======*/
-
 function makeMove (index) {
 	var isMove = false;
-	if(!selectedPiece) 
+	if(!selectedPiece)
 		return false;
 	if(index != upLeft && index != upRight && index != downLeft && index != downRight){
 		erase_roads(0);
