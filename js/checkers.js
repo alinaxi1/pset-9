@@ -159,10 +159,6 @@ for (var i = 9; i <= 12; i++){
 the_checker = w_checker;
 
 function showMoves (piece) {
-	/* daca a fost selectat inainte o piesa stergem drumurile ei actualizand nu drumurile  Game made by Cojocaru Calin George all rights reserved piesei noi s
-	electat
-
-	*/
 
 	var match = false;
 	mustAttack = false;
@@ -170,7 +166,7 @@ function showMoves (piece) {
 			erase_roads(selectedPiece);
 	}
 	selectedPiece = piece;
-	var i,j; 
+	var i,j;
 	for ( j = 1; j <= 12; j++){
 		if(the_checker[j].id == piece){
 			i = j;
