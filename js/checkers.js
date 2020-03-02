@@ -359,7 +359,6 @@ function executeMove (X,Y,nSquare){
 	the_checker[selectedPieceindex].setCoord(0,0);
 	// eliberez campul pe care il ocupa piesa si il ocup pe cel pe care il va ocupa
 	block[the_checker[selectedPieceindex].ocupied_square].ocupied = false;
-	//alert (the_checker[selectedPieceindex].ocupied_square);
 	block[the_checker[selectedPieceindex].ocupied_square + nSquare].ocupied = true;
 	block[the_checker[selectedPieceindex].ocupied_square + nSquare].pieceId = 	block[the_checker[selectedPieceindex].ocupied_square ].pieceId;
 	block[the_checker[selectedPieceindex].ocupied_square ].pieceId = undefined;
