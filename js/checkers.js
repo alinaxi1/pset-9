@@ -353,8 +353,6 @@ function makeMove (index) {
 	}
 }
 
-/*===========MUTAREA PIESEI-SCHIMBAREA COORDONATELOR======*/
-
 function executeMove (X,Y,nSquare){
 	// schimb coordonate piesei mutate
 	the_checker[selectedPieceindex].changeCoord(X,Y);
