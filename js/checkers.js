@@ -42,8 +42,6 @@ var tableLimit,reverse_tableLimit ,  moveUpLeft,moveUpRight, moveDownLeft,moveDo
 		moveDeviation = 6;
 	}
 
-/*================declararea claselor=========*/
-
 var square_p = function(square,index){
 	this.id = square;
 	this.ocupied = false;
@@ -95,9 +93,6 @@ checker.prototype.checkIfKing = function () {
 		this.id.style.border = "4px solid #FFFF00";
 	}
 }
-
-/*===============Initializarea campurilor de joc =================================*/
-
 
 for (var i = 1; i <=64; i++)
 	block[i] =new square_p(square_class[i],i);
