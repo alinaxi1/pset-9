@@ -189,7 +189,7 @@ function showMoves (piece) {
 	}
 
 	if(!match) {
-	 return 0 ; // daca nu a fost gasit nicio potrivire ; se intampla cand de exemplu rosu muta iar tu apasi pe negru
+	 return 0 ; 
 	}
 
 	if(the_checker[i].color =="white"){
