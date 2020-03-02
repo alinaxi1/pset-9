@@ -254,7 +254,6 @@ function makeMove (index) {
 		return false;
 	}
 
- /* =========perspectiva e a jucatorului care muta ======*/
 	if(the_checker[1].color=="white"){
 		cpy_downRight = upRight;
 		cpy_downLeft = upLeft;
@@ -268,7 +267,7 @@ function makeMove (index) {
 		cpy_upRight = downLeft;
 	}
 
-	if(mustAttack)  
+	if(mustAttack)
 		multiplier = 2;
 	else
 		multiplier = 1;
