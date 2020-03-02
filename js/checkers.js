@@ -27,7 +27,7 @@ var the_checker ;
 var oneMove;
 var anotherMove;
 var mustAttack = false;
-var multiplier = 1 // 2 daca face saritura 1 in caz contrat
+var multiplier = 1 
 
 var tableLimit,reverse_tableLimit ,  moveUpLeft,moveUpRight, moveDownLeft,moveDownRight , tableLimitLeft, tableLimitRight;
 
