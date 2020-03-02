@@ -192,7 +192,6 @@ function showMoves (piece) {
 	 return 0 ; // daca nu a fost gasit nicio potrivire ; se intampla cand de exemplu rosu muta iar tu apasi pe negru
 	}
 
-	/*===acum in functie de culoarea lor setez marginile si miscarile damei===*/
 	if(the_checker[i].color =="white"){
 		tableLimit = 8;
 		tableLimitRight = 1;
@@ -211,7 +210,7 @@ function showMoves (piece) {
 		moveDownRight = 9;
 		moveDownLeft = 7;
 	}
-  
+
 		attackMoves(the_checker[i]);
 
  	if(!mustAttack){
