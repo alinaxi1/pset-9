@@ -214,7 +214,7 @@ function showMoves (piece) {
  	/*===========VERIFIC DACA POT ATACA====*/
 
 
-		attackMoves(the_checker[i]); // verifica daca am vreo miscare de atac
+		attackMoves(the_checker[i]); 
 
  	if(!mustAttack){
  	  downLeft = checkMove( the_checker[i] , tableLimit , tableLimitRight , moveUpRight , downLeft);
