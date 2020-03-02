@@ -11,19 +11,6 @@ body {
   text-align: center;
 }
 
-#resetButton {
-  font-size: 21px;
-  padding: 10px;
-  border-radius: 1px;
-  background-color: #ffffff;
-}
-
-#resetButton:hover {
-  background-color: black;
-  color: white;
-  cursor: pointer;
-}
-
 canvas {
   display: block;
   margin-bottom: 20px;
