@@ -151,11 +151,6 @@ for (var i = 9; i <= 12; i++){
 	block[24 + 2*i ].pieceId = b_checker[i];
 }
 
-/*========================================================*/
-
-
-
-/*================SELECTIA UNEI PIESE==============*/
 the_checker = w_checker;
 
 function showMoves (piece) {
