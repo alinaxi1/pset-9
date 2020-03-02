@@ -331,7 +331,6 @@ function makeMove (index) {
 	erase_roads(0);
 	the_checker[selectedPieceindex].checkIfKing();
 
-	// schimb randul
 	if (isMove) {
 			playSound(moveSound);
 			anotherMove = undefined;
