@@ -129,7 +129,6 @@ for (var i = 9; i <= 12; i++){
 	block[2*i - 1].pieceId = w_checker[i];
 }
 
-//damele negre
 for (var i = 1; i <= 4; i++){
 	b_checker[i] = new checker(black_checker_class[i], "black", 56 + 2*i  );
 	b_checker[i].setCoord(0,0);
