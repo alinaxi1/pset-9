@@ -216,9 +216,6 @@ function showMoves (piece) {
 
 		attackMoves(the_checker[i]); // verifica daca am vreo miscare de atac
 
-
-	/*========DACA NU POT ATACA VERIFIC DACA POT MERGE======*/
-
  	if(!mustAttack){
  	  downLeft = checkMove( the_checker[i] , tableLimit , tableLimitRight , moveUpRight , downLeft);
 		downRight = checkMove( the_checker[i] , tableLimit , tableLimitLeft , moveUpLeft , downRight);
