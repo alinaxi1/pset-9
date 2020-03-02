@@ -346,7 +346,7 @@ function checkMove(Apiece,tLimit,tLimit_Side,moveDirection,theDirection){
 
 
 
-function  checkAttack( check , X, Y , negX , negY, squareMove, direction){
+function checkAttack( check , X, Y , negX , negY, squareMove, direction){
 	if(check.coordX * negX >= 	X * negX && check.coordY *negY <= Y * negY && block[check.ocupied_square + squareMove ].ocupied && block[check.ocupied_square + squareMove].pieceId.color != check.color && !block[check.ocupied_square + squareMove * 2 ].ocupied){
 		mustAttack = true;
 		direction = check.ocupied_square +  squareMove*2 ;
@@ -434,7 +434,7 @@ function checkIfLost(){
 	return true;
 }
 
-function  checkForMoves(){
+function checkForMoves(){
 	var i ;
 	for(i = 1 ; i <= 12; i++)
 		if(the_checker[i].alive && showMoves(the_checker[i].id)){
