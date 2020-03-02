@@ -31,7 +31,6 @@ var multiplier = 1 // 2 daca face saritura 1 in caz contrat
 
 var tableLimit,reverse_tableLimit ,  moveUpLeft,moveUpRight, moveDownLeft,moveDownRight , tableLimitLeft, tableLimitRight;
 
-/*================================*/
 	getDimension();
 	if(windowWidth > 640){
 		moveLength = 80;
