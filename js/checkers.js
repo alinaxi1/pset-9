@@ -268,7 +268,7 @@ function makeMove (index) {
 		cpy_upRight = downLeft;
 	}
 
-	if(mustAttack)  // ca sa stiu daca sar doar un rand sau 2
+	if(mustAttack)  
 		multiplier = 2;
 	else
 		multiplier = 1;
